@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        background-color: rgb(39, 164, 223);
+    }
+
+    .card {
+        position: fixed;
+        width: 100px;
+        height: 100px;
+        background-color: rgba(111, 107, 128, 0.925);
+    }
+</style>
+
+<body>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+
+    <div class="view"></div>
+</body>
+<script src="art.js"></script>
+<script>
+    card = document.getElementsByClassName("card")
+
+    for(var i=0;i<card.length;i++){
+        getCentre(card[i])
+    }
+
+    
+    var l=pixtoint(card[0].style.left)
+    document.addEventListener('wheel', function (elm) {
+        var h=card[0].offsetHeight
+        var w=card[0].offsetWidth
+
+
+        console.log(l);
+
+
+        card[0].style.height = h+elm.deltaY+ 'px'
+        card[0].style.width =  w+elm.deltaY+ 'px'
+
+        l=l+elm.deltaX
+        card[0].style.left = l+ 'px'
+
+        getCentre(card[0],'y')
+    })
+
+</script>
+
+</html>
