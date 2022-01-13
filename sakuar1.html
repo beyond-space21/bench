@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Licorice&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        background-color: rgb(103, 103, 107);
+        background-image: url("imgs/tree.png");
+        background-repeat: no-repeat;
+        background-position: left center;
+    }
+
+    .navigation {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 70px;
+        width: 70px;
+        border-top-right-radius: 50%;
+        border-bottom-right-radius: 50%;
+        border-bottom-left-radius: 50%;
+        background-color: rgb(252, 103, 103);
+        animation: shake1 500ms ease-in-out forwards;
+    }
+
+    .navigation1 {
+        display: none;
+        height: 250px;
+        width: 250px;
+        margin-top: 35px;
+        margin-left: 35px;
+        border-radius: 50%;
+        background-color: rgb(252, 103, 103);
+    }
+
+    .navigation2 {
+        position: fixed;
+        height: 70px;
+        width: 70px;
+        border-top-right-radius: 50%;
+        border-bottom-right-radius: 50%;
+        border-bottom-left-radius: 50%;
+        background-color: rgb(252, 103, 103);
+    }
+
+    .navigation:hover {
+        border-top-right-radius: 50%;
+        border-bottom-right-radius: 50%;
+        border-bottom-left-radius: 50%;
+        background-color: rgb(89, 92, 88);
+        animation: shake 500ms ease-in-out forwards;
+    }
+
+    @keyframes shake {
+        from {
+            width: 200px;
+            height: 200px;
+        }
+
+        to {
+            width: 300px;
+            height: 300px;
+        }
+    }
+
+    @keyframes shake1 {
+        from {
+            width: 300px;
+            height: 300px;
+        }
+
+        to {
+            width: 100px;
+            height: 100px;
+        }
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: auto auto;
+        margin-left: 50px;
+    }
+
+    .grid-item {
+        padding: 0ch;
+        width: 50px;
+        height: 50px;
+        margin-top: 50px;
+        text-align: center;
+    }
+    .tpcomuni{
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100px;
+        width: 100%;
+        margin-left: 50px;
+        background-color: brown;
+    }
+    .container1{
+        border-width: 10px;
+        border-color: rgb(0, 0, 0);
+        width: 700px;
+        height: 500px;
+        margin-top: 150px;
+        margin-left: 700px;
+        /* background-color: rgb(114, 110, 108); */
+        font-family: Verdana, sans-serif;
+    }
+    h2{
+        font-family: 'Inconsolata', monospace;
+        color: ghostwhite;
+        font-size: 40px;
+        font-weight: 200;
+    }
+</style>
+
+<body>
+    <!-- <div class="tpcomuni"></div> -->
+    <div class="container1">
+        <h2>>Attend test and get Certificate</h2>
+        <h2>>Each certificate is generated with a unique id and can be verified anytime</h2>
+        <h2>>Create and maintain your blog for free</h2>
+    </div>
+    <div id="navigation1" onmouseover="shownav1()" onmouseout="hidenav1()" class="navigation nav">
+        <div id="navigation2" class="navigation2 nav">
+            <img id="navspace0" class="nav" src="imgs/home.png" width="30px" style="margin-top: 20px; margin-left: 20px;"
+                draggable="false" alt=" Page Now At">
+        </div>
+        <div id="navigation3" class="navigation1 nav">
+            <div id=navigation4 class="grid-container nav">
+                <img id="navspace1" onclick="navigate(1)" class="grid-item nav" src="imgs/blog.png" draggable="false"
+                    alt="profile">
+                <img id="navspace2" onclick="navigate(2)" class="grid-item nav" src="imgs/profile.png" draggable="false"
+                    alt="profile">
+                <img id="navspace3" onclick="navigate(3)" class="grid-item nav" src="imgs/profile.png" draggable="false"
+                    alt="profile">
+                <img id="navspace4" onclick="navigate(4)" class="grid-item nav" src="imgs/profile.png" draggable="false"
+                    alt="profile">
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+<script>
+    var nav = [
+        { icon: 'imgs/home.png', page: '' },
+        { icon: 'imgs/blog.png', page: '' },
+        { icon: 'imgs/profile.png', page: '' },
+        { icon: 'imgs/profile.png', page: '' },
+        { icon: 'imgs/profile.png', page: '' }]
+
+    function shownav1() {
+        document.getElementById("navigation3").style.display = "block"
+    }
+    function hidenav1() {
+        document.getElementById("navigation3").style.display = "none"
+    }
+    function navigate(to) {
+        document.getElementById('navspace0').src = nav[to].icon
+        document.getElementById('navspace'.concat(to)).src = nav[0].icon
+        var a = nav[0]
+        nav[0] = nav[to]
+        nav[to] = a
+    }
+</script>
+
+</html>
+
