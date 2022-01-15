@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        background-color: rgb(134, 88, 168);
+    }
+
+    .card {
+        position: fixed;
+        border-radius: 20px;
+    }
+</style>
+
+<body>
+    <div class="card"></div>
+    <div class="card"></div>
+    
+</body>
+<script src="art.js"></script>
+<script>
+    card = document.getElementsByClassName('card')
+    cardState={a:0,b:1}
+    card[0].style.height=window.innerHeight-100+'px'
+    card[0].style.width=window.innerWidth-100+'px'
+    card[1].style.height=window.innerHeight-100+'px'
+    card[1].style.width=window.innerWidth-100+'px'
+    card[0].style.backgroundColor = 'rgba('+map(Math.random(),0,1,100,255)+','+ map(Math.random(),0,1,100,255)+','+ map(Math.random(),0,1,100,255)+',1)'
+    card[1].style.backgroundColor = 'rgba('+map(Math.random(),0,1,100,255)+','+ map(Math.random(),0,1,100,255)+','+ map(Math.random(),0,1,100,255)+',1)'
+    gettoCentre(card[0])
+
+    var r=[]
+    var g=[]
+    var b=[]
+
+    // for(var i=0;i<10;i++){
+    //     r.push(map(Math.random(),0,1,100,255))
+    //     g.push(map(Math.random(),0,1,100,255))
+    //     b.push(map(Math.random(),0,1,100,255))
+    // }
+
+    var clearance = -7
+    var scrollspeed = 500
+    var cenrtre = { x: window.innerWidth / 2, y: window.innerHeight / 2 }
+
+    var cordinates = direction(map(Math.random(),0,1,0,360), diagnallength(card[0]))
+    getCentreTo(card[1], cordinates.x + cenrtre.x + clearance, cordinates.y + cenrtre.y + clearance)
+
+    var percent = 0
+    document.addEventListener('wheel', function (elm) {
+        deltaY = elm.deltaY
+        
+        // if(deltaY<0)
+        // e = percent + deltaY*-1
+        // else
+        e = percent + deltaY        
+
+        if (e >= 0 && e <= scrollspeed) {
+            percent = e
+            x = map(e, 0, scrollspeed, cordinates.x + cenrtre.x + clearance, cenrtre.x + clearance)
+            y = map(e, 0, scrollspeed, cordinates.y + cenrtre.y + clearance, cenrtre.y + clearance)
+            console.log(x, y);
+
+            getCentreTo(card[cardState.b], x, y)
+            card[cardState.b].style.zIndex = "1"
+            card[cardState.a].style.zIndex = "0"
+
+            if (e >= scrollspeed) {
+                cordinates = direction(map(Math.random(),0,1,0,360), diagnallength(card[0]))
+                getCentreTo(card[cardState.a], cordinates.x + cenrtre.x + clearance, cordinates.y + cenrtre.y + clearance)
+                percent=0
+                var swap
+                swap = cardState.a
+                cardState.a=cardState.b
+                cardState.b=swap
+                // card[cardState.b].style.backgroundColor = 'rgba('+map(Math.random(),0,1,100,255)+','+ map(Math.random(),0,1,100,255)+','+ map(Math.random(),0,1,100,255)+',1)'
+            }
+        }
+    })
+</script>
+
+</html>
