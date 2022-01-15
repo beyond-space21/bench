@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        background-color: rgb(134, 88, 168);
+    }
+
+    .card {
+        position: fixed;
+        background-color: rgba(248, 228, 214, 0.5);
+        border-radius: 20px;
+    }
+</style>
+
+<body>
+    <div class="card"></div>
+    <div class="card"></div>
+</body>
+<script src="art.js"></script>
+<script>
+    card = document.getElementsByClassName('card')
+    card[0].style.height=window.innerHeight-100+'px'
+    card[0].style.width=window.innerWidth-100+'px'
+    card[1].style.height=window.innerHeight-100+'px'
+    card[1].style.width=window.innerWidth-100+'px'
+    // card[0].style.height = 100 + 'px'
+    // card[0].style.width = 100 + 'px'
+    // card[1].style.height = 100 + 'px'
+    // card[1].style.width = 100 + 'px'
+    gettoCentre(card[0])
+
+
+    var clearance = -8
+    var scrollspeed = 500
+    var cenrtre = { x: window.innerWidth / 2, y: window.innerHeight / 2 }
+
+    var cordinates = direction(map(Math.random(),0,1,0,360), diagnallength(card[0]))
+    getCentreTo(card[1], cordinates.x + cenrtre.x + clearance, cordinates.y + cenrtre.y + clearance)
+
+    var percent = 0
+    document.addEventListener('wheel', function (elm) {
+        deltaY = elm.deltaY
+        e = percent + deltaY
+
+        if (e >= 0 && e <= scrollspeed) {
+            percent = e
+            x = map(e, 0, scrollspeed, cordinates.x + cenrtre.x + clearance, cenrtre.x + clearance)
+            y = map(e, 0, scrollspeed, cordinates.y + cenrtre.y + clearance, cenrtre.y + clearance)
+            console.log(x, y);
+            getCentreTo(card[1], x, y)
+            if (e >= scrollspeed) {
+                cordinates = direction(map(Math.random(),0,1,0,360), diagnallength(card[0]))
+                getCentreTo(card[1], cordinates.x + cenrtre.x + clearance, cordinates.y + cenrtre.y + clearance)
+                percent=0
+            }
+        }
+    })
+</script>
+
+</html>
