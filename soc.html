@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>soc</title>
+</head>
+<style>
+    body {
+        background-color: slategrey;
+    }
+
+    .connection-status {
+        display: flex;
+        justify-content: start;
+        flex-wrap: wrap;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-weight: 800;
+        /* vertical-align:50px; */
+    }
+
+    .connection-status button {
+        background-color: rgb(192, 192, 192);
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        border-radius: 10px;
+        margin-left: 20px;
+    }
+
+    #status {
+        height: 20px;
+        width: 20px;
+        padding: 5px;
+        margin-left: 10px;
+        border-radius: 10px;
+        text-align: center;
+        background-color: rgb(211, 35, 35);
+    }
+
+    .sent {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .sent div {
+        width: fit-content;
+        padding: 5px;
+        border-radius: 10px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-weight: 800;
+        background-color: white;
+        margin: 15px;
+    }
+
+    .recieved {
+        width: fit-content;
+        padding: 5px;
+        /* float: left; */
+        border-radius: 10px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-weight: 800;
+        background-color: rgb(19, 255, 117);
+        margin: 20px;
+    }
+
+    .send {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-wrap: wrap;
+        padding: 5px;
+        margin-bottom: 20px;
+        background-color: thistle;
+    }
+
+    .send input {
+        width: 30vw;
+    }
+</style>
+
+<body>
+    <div class="connection-status">
+        <div style="display: flex;">
+            <div>Status:</div>
+            <div id="status"></div>
+        </div>
+        <button id="sts-btn">connect</button>
+    </div>
+    <br>
+    <br>
+    <div id="messages">
+        <div class="sent">
+            <div>hi</div>
+        </div>
+        <div class="recieved">hello!</div>
+    </div>
+
+    <div class="send">
+        <input id="text" type="text">
+        <button id="post">Enter</button>
+    </div>
+</body>
+<script>
+// const socket = new WebSocket('wss://s3465.sgp1.piesocket.com/v3/1?api_key=JnmD2Xbch5ee2KlcTyrrbXej5jqicRFNa4fefgrx&notify_self');
+console.log(socket);
+    text = document.getElementById('text')
+    btn = document.getElementById('post')
+    stsBtn = document.getElementById('sts-btn')
+
+    btn.onclick = function () {
+        if (text.value) {
+            postSOC(text.value)
+        }
+    }
+
+    stsBtn.onclick = function () {
+        openSOC()
+    }
+
+    function appendMessage(way, txt) {
+        var node1 = document.createElement("div");
+        var node2 = document.createElement("div")
+        node1.className = way
+        node2.innerHTML = txt
+        node1.appendChild(node2)
+        document.getElementById("messages").appendChild(node1);
+    }
+
+    var socket
+    function openSOC() {
+        socket = new WebSocket('wss://s3465.sgp1.piesocket.com/v3/1?api_key=JnmD2Xbch5ee2KlcTyrrbXej5jqicRFNa4fefgrx&notify_self');
+
+        socket.addEventListener('error', function (event) {
+            console.log('WebSocket error: ', event);
+        });
+        socket.addEventListener('message', function (event) {
+            appendMessage('recieved', event.data)
+        });
+        socket.addEventListener('open', function (event) {
+            console.log('connection established successfully!');
+            document.getElementById('status').style.backgroundColor = 'rgb(35, 211, 35)'
+        });
+        socket.addEventListener('close', function (event) {
+            console.log('connection was terminated successfully!')
+            document.getElementById('status').style.backgroundColor = 'rgb(211, 35, 35)'
+        });
+    }
+
+    function postSOC(msg) {
+        if (socket)
+            socket.send(msg)
+    }
+
+</script>
+
+</html>
