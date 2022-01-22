@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        background-color: rgb(83, 83, 83);
+        overflow-y:visible;
+    }
+    .msg{
+        padding: 5px;
+        background-color: slategray;
+        border-radius: 10px;
+        margin: 10px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 21px;
+        font-weight:600;
+        width: fit-content;
+    }
+</style>
+<body>
+
+</body>
+<script>
+    const socket = new WebSocket('wss://s3465.sgp1.piesocket.com/v3/1?api_key=JnmD2Xbch5ee2KlcTyrrbXej5jqicRFNa4fefgrx&notify_self');
+    socket.addEventListener('message', function (event) {
+        console.log(event.data);
+        var elm = document.createElement("div");
+        elm.className='msg'
+        elm.innerHTML=event.data;
+        document.body.appendChild(elm);
+    });
+</script>
+
+</html>
